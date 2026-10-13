@@ -1,0 +1,55 @@
+
+# Prompt Quality Evaluation for RAG
+
+context = """
+Climate change is mainly caused by greenhouse gases
+released by burning fossil fuels. It leads to rising
+temperatures and melting ice.
+"""
+
+questions = [
+    "What causes climate change?",
+    "What are the effects of climate change?",
+    "How can we reduce climate change?"
+]
+
+answers = [
+    "Burning fossil fuels releases greenhouse gases.",
+    "It causes rising temperatures and melting ice.",
+    "We can reduce it by using renewable energy."
+]
+
+# Prompt A - Baseline
+prompt_a = "Answer the question using the provided context."
+
+# Prompt B - Enhanced
+prompt_b = """
+Answer using only the provided context.
+Be concise and accurate.
+Do not guess or add unsupported information.
+"""
+
+print("PROMPT A:", prompt_a)
+print("\nPROMPT B:", prompt_b)
+
+print("\n--- Evaluation Results ---")
+
+for i in range(len(questions)):
+    print("\nQuestion:", questions[i])
+    print("Context:", context)
+    print("Answer:", answers[i])
+
+    # Simple manual evaluation
+    faithfulness = 1 if any(
+        word in context.lower()
+        for word in answers[i].lower().split()
+    ) else 0
+
+    relevance = 1 if answers[i] else 0
+
+    print("Faithfulness Score:", faithfulness)
+    print("Answer Relevancy Score:", relevance)
+
+print("\nEthical Risks:")
+print("1. Incorrect or unsupported answers")
+print("2. Sensitive information leakage")
